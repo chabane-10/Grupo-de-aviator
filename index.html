@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aviator Bot</title>
     <style>
         * {
@@ -19,13 +19,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            overflow-x: hidden;
-            animation: fadeIn 4s ease-in-out forwards;
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            color: white;
         }
 
         .container {
@@ -34,17 +28,9 @@
             padding: 30px;
             width: 100%;
             max-width: 450px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideUp 4s ease-out forwards;
-        }
-
-        @keyframes slideUp {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
         }
 
         .icon-container {
@@ -56,7 +42,7 @@
         .icon {
             width: 120px;
             height: 120px;
-            background-color: #ff0000;
+            background: #ff0000;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -64,41 +50,17 @@
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
             animation: pulse 2s infinite ease-in-out;
             position: relative;
-            overflow: hidden;
         }
 
-        .icon::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.3), transparent);
-            animation: rotate 8s linear infinite;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
         }
 
         .icon svg {
             width: 70px;
             height: auto;
-            filter: brightness(0) invert(1);
-            animation: flyIn 4s ease-in-out forwards;
-        }
-
-        @keyframes flyIn {
-            0% { transform: rotate(-45deg) scale(0.8); opacity: 0; }
-            50% { transform: rotate(5deg) scale(1.1); opacity: 1; }
-            100% { transform: rotate(0deg) scale(1); opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            filter: invert(1);
         }
 
         h2 {
@@ -107,12 +69,6 @@
             margin-bottom: 20px;
             font-size: 28px;
             font-weight: 700;
-            animation: fadeInText 4s ease-in-out forwards;
-        }
-
-        @keyframes fadeInText {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
         }
 
         p {
@@ -121,7 +77,6 @@
             margin-bottom: 30px;
             font-size: 18px;
             line-height: 1.5;
-            animation: fadeInText 4s ease-in-out forwards;
         }
 
         .button-group {
@@ -144,17 +99,10 @@
             outline: none;
             text-decoration: none;
             color: white;
-            animation: fadeInBtn 4s ease-in-out forwards;
-        }
-
-        @keyframes fadeInBtn {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
         }
 
         .btn-green {
             background: linear-gradient(135deg, #00c853, #00e676);
-            box-shadow: 0 5px 20px rgba(0, 200, 83, 0.4);
         }
 
         .btn-green:hover {
@@ -164,7 +112,6 @@
 
         .btn-blue {
             background: linear-gradient(135deg, #0091ea, #00b0ff);
-            box-shadow: 0 5px 20px rgba(0, 145, 234, 0.4);
         }
 
         .btn-blue:hover {
@@ -172,29 +119,44 @@
             box-shadow: 0 8px 25px rgba(0, 145, 234, 0.6);
         }
 
+        /* AVISO com COR ANTIGA + ANIMAÇÃO SUPER ACELERADA */
         .warning {
             background-color: #fff3cd;
             color: #7a5d00;
-            padding: 15px;
-            border-radius: 15px;
+            padding: 12px;
+            border-radius: 12px;
             text-align: center;
-            font-size: 16px;
+            font-size: 15px;
             margin-top: 20px;
             border: 2px solid #ffd700;
             display: flex;
             align-items: center;
-            gap: 10px;
-            animation: fadeInText 4s ease-in-out forwards;
+            justify-content: center;
+            gap: 8px;
+            /* Animação SUPER RÁPIDA */
+            animation: pulseWarning 0.8s infinite alternate;
+        }
+
+        @keyframes pulseWarning {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+                transform: scale(1);
+            }
+            100% {
+                box-shadow: 0 0 0 6px rgba(255, 215, 0, 0);
+                transform: scale(1.03);
+            }
         }
 
         .warning::before {
             content: '⚠';
-            font-size: 20px;
+            font-size: 18px;
         }
 
+        /* Marca d'água — letras MENORES */
         .watermark {
             position: absolute;
-            bottom: 8px;
+            bottom: 4px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 10px;
@@ -203,10 +165,10 @@
             text-align: center;
             width: 100%;
             letter-spacing: 0.5px;
-            z-index: 100;
+            z-index: 10;
         }
 
-        /* Modal de informação */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -214,59 +176,58 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.85);
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
 
         .modal {
-            background-color: #1e1e1e;
+            background: #1e1e1e;
             border-radius: 16px;
-            padding: 25px;
-            width: 90%;
-            max-width: 400px;
+            padding: 20px;
+            width: 85%;
+            max-width: 360px;
             text-align: center;
             opacity: 0;
-            transform: scale(0.8);
+            transform: scale(0.9);
             animation: modalAppear 2s forwards;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
         }
 
         @keyframes modalAppear {
-            0% { opacity: 0; transform: scale(0.8); }
+            0% { opacity: 0; transform: scale(0.9); }
             100% { opacity: 1; transform: scale(1); }
         }
 
         .modal h3 {
             color: #ff5555;
-            margin-bottom: 15px;
-            font-size: 22px;
+            margin-bottom: 12px;
+            font-size: 20px;
         }
 
         .modal p {
             color: #ffffff;
-            font-size: 16px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.4;
+            margin-bottom: 18px;
         }
 
         .modal-btn {
             background: linear-gradient(135deg, #ff5555, #ff0000);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-size: 18px;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s;
         }
 
         .modal-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
-        /* Responsive */
         @media (max-width: 480px) {
             .container { padding: 20px; margin: 10px; }
             h2 { font-size: 24px; }
@@ -274,11 +235,7 @@
             .btn { padding: 15px 20px; font-size: 18px; }
             .icon { width: 100px; height: 100px; }
             .icon svg { width: 60px; }
-        }
-
-        @media (min-width: 768px) {
-            .container { padding: 40px; }
-            .btn { padding: 20px 30px; font-size: 22px; }
+            .watermark { font-size: 9px; bottom: 3px; }
         }
     </style>
 </head>
@@ -286,61 +243,54 @@
     <div class="container">
         <div class="icon-container">
             <div class="icon">
-                <!-- NOVO AVIÃO DE PAPEL - ESTILO MODERNO E LIMPO -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 19H5l-1-1L3 6l1-1h17l1 1v12l-1 1h-5"></path>
-                    <path d="M12 19v-6"></path>
-                    <path d="M12 13l-4-4"></path>
-                    <path d="M12 13l4-4"></path>
-                    <circle cx="12" cy="13" r="1" fill="white"/>
+                <!-- AVIÃO DE PAPEL REALISTA -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M50,15 L20,45 L35,55 L10,80 L50,70 L90,80 L65,55 L80,45 Z" fill="white"/>
+                    <path d="M50,70 L50,95" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M20,45 L50,30 L80,45" fill="none" stroke="white" stroke-width="1.2"/>
                 </svg>
             </div>
         </div>
-        
+
         <h2>Antes de obter...</h2>
-        
         <p>Entre no nosso grupo de WhatsApp para receber dicas exclusivas de como ganhar no Aviator!</p>
-        
+
         <div class="button-group">
             <a href="https://chat.whatsapp.com/DyelYzKuWiYESZtTMbFc3A" class="btn btn-green">Entrar no Grupo</a>
             <button id="botBtn" class="btn btn-blue">Obter Bot Aviator</button>
         </div>
-        
+
+        <!-- Mensagem com animação SUPER ACELERADA -->
         <div class="warning">
             É obrigatório entrar no grupo primeiro para continuar
         </div>
-        
+
         <div class="watermark">
             Desenvolvido por: •~| MªøN⁰ⁿGª |~•
         </div>
     </div>
 
-    <!-- Modal de Informação -->
+    <!-- Modal -->
     <div class="modal-overlay" id="modal">
         <div class="modal">
             <h3>Atenção!</h3>
-            <p>Para obter o bot, você precisa primeiro entrar no grupo oficial. Todos estão faturando no Aviator com nossas estratégias exclusivas!</p>
+            <p>Para obter o bot, você precisa primeiro entrar no grupo. Todos estão faturando no Aviator!</p>
             <button class="modal-btn" id="closeModal">OK</button>
         </div>
     </div>
 
     <script>
-        const botBtn = document.getElementById('botBtn');
-        const modal = document.getElementById('modal');
-        const closeModal = document.getElementById('closeModal');
-
-        botBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
+        document.getElementById('botBtn').addEventListener('click', () => {
+            document.getElementById('modal').style.display = 'flex';
         });
 
-        closeModal.addEventListener('click', () => {
-            modal.style.display = 'none';
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('modal').style.display = 'none';
         });
 
-        // Clicar fora do modal também fecha
         window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
+            if (e.target.id === 'modal') {
+                document.getElementById('modal').style.display = 'none';
             }
         });
     </script>
